@@ -68,17 +68,25 @@ Para esto, realice lo siguiente:
 	```bash
 	git commit -m "PARTE 1".
 	```
-
-
+![](img/lab/9.png)
 
 ## Parte II.
 
 Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con campos de formulario, las va a capturar a través de eventos sobre un elemento de tipo \<canvas>. De la misma manera, en lugar de simplemente mostrar las coordenadas enviadas en los eventos a través de 'alertas', va a dibujar dichos puntos en el mismo canvas. Haga uso del mecanismo de captura de eventos de mouse/táctil usado en ejercicios anteriores con este fin.
 
 1. Haga que el 'callback' asociado al tópico /topic/newpoint en lugar de mostrar una alerta, dibuje un punto en el canvas en las coordenadas enviadas con los eventos recibidos. Para esto puede [dibujar un círculo de radio 1](http://www.w3schools.com/html/html5_canvas.asp).
-4. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
 
-5. Haga commit de lo realizado, para marcar el avance de la parte 2.
+![](img/lab/6.png)
+
+![](img/lab/7.png)
+
+![](img/lab/8.png)
+
+2. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
+
+![](img/lab/5.png)
+
+3. Haga commit de lo realizado, para marcar el avance de la parte 2.
 
 	```bash
 	git commit -m "PARTE 2".

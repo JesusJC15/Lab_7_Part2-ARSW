@@ -14,6 +14,8 @@ var app = (function () {
         var ctx = canvas.getContext("2d");
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "blue";
+        ctx.fill();
         ctx.stroke();
     };
 
@@ -36,8 +38,6 @@ var app = (function () {
 
             stompClient.subscribe('/topic/newpoint', function (eventbody) {
                 var theObject = JSON.parse(eventbody.body);
-
-                alert("Point -> X: " + theObject.x + ", Y: " + theObject.y);
 
                 addPointToCanvas(theObject);
             });
