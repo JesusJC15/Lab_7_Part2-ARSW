@@ -84,13 +84,14 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 
 2. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
 
-![](img/lab/5.png)
+![](img/lab/10.png)
 
 3. Haga commit de lo realizado, para marcar el avance de la parte 2.
 
 	```bash
 	git commit -m "PARTE 2".
 	```
+![](img/lab/11.png)
 
 ## Parte III.
 
