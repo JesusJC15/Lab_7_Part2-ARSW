@@ -10,6 +10,7 @@ var app = (function () {
     var stompClient = null;
     var currentTopic = null;
     var connected = false;
+    var currentId = null;
 
     var addPointToCanvas = function (point) {
         var canvas = document.getElementById("canvas");
@@ -34,7 +35,7 @@ var app = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
-
+        currentId = id;
         currentTopic = "/topic/newpoint." + id;
 
         stompClient.connect({}, function (frame) {
@@ -49,11 +50,33 @@ var app = (function () {
                 var theObject = JSON.parse(eventbody.body);
                 addPointToCanvas(theObject);
             });
+
+            var polygonTopic = "/topic/newpolygon." + id;
+            stompClient.subscribe(polygonTopic, function (message) {
+                var polygon = JSON.parse(message.body);
+                drawPolygon(polygon.points);
+            });
         });
     };
 
     var setStatus = function (text) {
         document.getElementById("status").textContent = text;
+    };
+
+    var drawPolygon = function(points) {
+        if (points.length < 3) return;
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i++) {
+            ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = "rgba(0, 150, 255, 0.3)";
+        ctx.fill();
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
     };
 
     return {
@@ -96,7 +119,7 @@ var app = (function () {
             console.info("Publishing point at: (" + pt.x + "," + pt.y + ")");
             addPointToCanvas(pt);
 
-            stompClient.send(currentTopic, {}, JSON.stringify(pt));
+            stompClient.send("/app/newpoint." + currentId, {}, JSON.stringify(pt));
         }
 
     };
