@@ -117,7 +117,7 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 	```bash
 	git commit -m "PARTE 3".
 	```
-
+![](img/lab/19.png)
 
 ## Parte IV.
 
