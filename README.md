@@ -98,9 +98,21 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez, manteniendo tópicos independientes. Para esto:
 
 1. Agregue un campo en la vista, en el cual el usuario pueda ingresar un número. El número corresponderá al identificador del dibujo que se creará.
+
+![](img/lab/12.png)
+
 2. Modifique la aplicación para que, en lugar de conectarse y suscribirse automáticamente (en la función init()), lo haga a través de botón 'conectarse'. Éste, al oprimirse debe realizar la conexión y suscribir al cliente a un tópico que tenga un nombre dinámico, asociado el identificador ingresado, por ejemplo: /topic/newpoint.25, topic/newpoint.80, para los dibujos 25 y 80 respectivamente.
 3. De la misma manera, haga que las publicaciones se realicen al tópico asociado al identificador ingresado por el usuario.
+
+![](img/lab/13.png)
+![](img/lab/14.png)
+![](img/lab/15.png)
+
 4. Rectifique que se puedan realizar dos dibujos de forma independiente, cada uno de éstos entre dos o más clientes.
+
+![](img/lab/16.png)
+![](img/lab/17.png)
+![](img/lab/18.png)
 
 	```bash
 	git commit -m "PARTE 3".

@@ -17,24 +17,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html lang="en">
     <head>
-        <title>TODO supply a title</title>
+        <title>CollabPaint - Dibujo Colaborativo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <script src="/webjars/jquery/jquery.min.js"></script>
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>
         <script src="/webjars/stomp-websocket/stomp.min.js"></script>
         <script src="/app.js"></script>
 
+        <style>
+            #canvas { border: 1px solid #333; margin-top: 10px; cursor: crosshair; }
+        </style>
     </head>
 
-
-    
     <body onload="app.init()">
-        <label for="x">X:</label>
-        <input id="x" type="number" title="Enter X coordinate" placeholder="X coordinate"/>
-        <label for="y">Y:</label>
-        <input id="y" type="number" title="Enter Y coordinate" placeholder="Y coordinate"/>
-        <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
+        <h3>Laboratorio - Dibujos con tópicos dinámicos</h3>
+
+        <div>
+            <label for="drawingId">ID del dibujo:</label>
+            <input id="drawingId" type="number" placeholder="Ej: 25">
+            <button id="connectBtn">Conectarse</button>
+            <button id="disconnectBtn" disabled>Desconectar</button>
+            <span id="status">Desconectado</span>
+        </div>
+
         <canvas id="canvas" width="800" height="600"></canvas>
     </body>
 </html>
+

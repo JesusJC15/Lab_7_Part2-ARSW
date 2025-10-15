@@ -8,6 +8,8 @@ var app = (function () {
     }
 
     var stompClient = null;
+    var currentTopic = null;
+    var connected = false;
 
     var addPointToCanvas = function (point) {
         var canvas = document.getElementById("canvas");
@@ -28,20 +30,30 @@ var app = (function () {
         };
     };
 
-    var connectAndSubscribe = function () {
+    var connectAndSubscribe = function (id) {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
 
+        currentTopic = "/topic/newpoint." + id;
+
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
+            connected = true;
+            setStatus("Conectado a " + currentTopic);
+            document.getElementById("connectBtn").disabled = true;
+            document.getElementById("disconnectBtn").disabled = false;
+            document.getElementById("drawingId").disabled = true;
 
-            stompClient.subscribe('/topic/newpoint', function (eventbody) {
+            stompClient.subscribe(currentTopic, function (eventbody) {
                 var theObject = JSON.parse(eventbody.body);
-
                 addPointToCanvas(theObject);
             });
         });
+    };
+
+    var setStatus = function (text) {
+        document.getElementById("status").textContent = text;
     };
 
     return {
@@ -49,11 +61,33 @@ var app = (function () {
         init: function () {
             var canvas = document.getElementById("canvas");
 
-            connectAndSubscribe();
-
             canvas.addEventListener('click', function (event) {
+                if (!connected) {
+                    alert("Conéctate primero seleccionando un ID y pulsando 'Conectarse'");
+                    return;
+                }
                 var pos = getMousePosition(event);
                 app.publishPoint(pos.x, pos.y);
+            });
+
+            document.getElementById("connectBtn").addEventListener("click", function () {
+                var id = document.getElementById("drawingId").value;
+                if (id === "") {
+                    alert("Ingresa un número de dibujo");
+                    return;
+                }
+                connectAndSubscribe(id);
+            });
+
+            document.getElementById("disconnectBtn").addEventListener("click", function () {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                connected = false;
+                setStatus("Desconectado");
+                document.getElementById("connectBtn").disabled = false;
+                document.getElementById("disconnectBtn").disabled = true;
+                document.getElementById("drawingId").disabled = false;
             });
         },
 
@@ -62,15 +96,9 @@ var app = (function () {
             console.info("Publishing point at: (" + pt.x + "," + pt.y + ")");
             addPointToCanvas(pt);
 
-            stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
-        },
-
-        disconnect: function () {
-            if (stompClient !== null) {
-                stompClient.disconnect();
-            }
-            console.log("Disconnected");
+            stompClient.send(currentTopic, {}, JSON.stringify(pt));
         }
+
     };
 
 })();
